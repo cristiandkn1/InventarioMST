@@ -1,26 +1,51 @@
-<?php include 'db.php'; ?>
-
-
 <?php
-session_start(); // Iniciar la sesión
+include 'db.php';
+session_start();
 
 // Verificar si el usuario NO está logueado
 if (!isset($_SESSION['usuario_id'])) {
-    header("Location: login.php"); // Redirige al login
-    exit(); // Detiene la ejecución del script
+    header("Location: login.php");
+    exit();
 }
+
 ?>
+
+
 
 <!DOCTYPE html>
 <html lang="es">
 <head>
+<style>
+  @media (max-width: 768px) {
+    .navbar-brand img {
+      height: 40px;
+    }
+    .logout-container {
+      margin-top: 10px;
+    }
+  }
+</style>
+
     <meta charset="UTF-8">
-    <title>Ordenes de Compra</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventario</title>
+
+    <!-- ✅ CSS Principal -->
     <link rel="stylesheet" href="css/style.css">
+    <!-- Bootstrap 5 -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- SweetAlert2 -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
+    <!-- ✅ Scripts - Ahora se cargan al final del <body> -->
 </head>
 <body>
-
 <?php $pagina = basename($_SERVER['PHP_SELF']); ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
@@ -142,6 +167,60 @@ if (!isset($_SESSION['usuario_id'])) {
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
+
 </body>
 </html>
