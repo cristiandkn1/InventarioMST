@@ -52,7 +52,7 @@ $result->data_seek(0); // Reiniciar otra vez para usarlo en la tabla
 ?>
 
 
-
+<style></style>
 
 <!DOCTYPE html>
 <html lang="es">
@@ -87,6 +87,13 @@ $result->data_seek(0); // Reiniciar otra vez para usarlo en la tabla
 
 
 <body>
+
+<style>
+    body {
+    background-color:rgb(221, 221, 221); /* 🌑 Fondo gris oscuro */
+    color:rgb(20, 20, 20);
+  }
+</style>
 
 <?php $pagina = basename($_SERVER['PHP_SELF']); ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
@@ -392,93 +399,87 @@ $result->data_seek(0); // Reiniciar otra vez para usarlo en la tabla
             </tr>
         </thead>
         <tbody>
-            <?php
-            // ✅ Consulta optimizada para mostrar los valores correctos sin modificar cantidad_total
-            $sql = "SELECT p.idproducto, p.nombre, p.precio, p.estado, p.descripcion, 
-               p.cantidad AS cantidad_total, 
-               p.en_uso, 
-               (p.cantidad - p.en_uso) AS disponibles, 
-               p.nro_asignacion, 
-               c.nombre AS categoria, 
-               GROUP_CONCAT(DISTINCT CONCAT('ID ', tp.trabajo_id, ' (', t.tipo, ')') SEPARATOR ', ') AS trabajos_asignados
-        FROM producto p
-        LEFT JOIN categoria c ON p.categoria_id = c.idcategoria
-        LEFT JOIN trabajo_producto tp ON p.idproducto = tp.producto_id
-        LEFT JOIN trabajo t ON tp.trabajo_id = t.idtrabajo
-        WHERE p.eliminado = 0
-        GROUP BY p.idproducto, p.nombre, p.precio, p.estado, p.descripcion, 
-                 p.cantidad, p.en_uso, p.nro_asignacion, c.nombre";
+  <?php
+  // ✅ Consulta optimizada para mostrar los valores correctos sin modificar cantidad_total
+  $sql = "SELECT p.idproducto, p.nombre, p.precio, p.estado, p.descripcion, 
+                 p.cantidad AS cantidad_total, 
+                 p.en_uso, 
+                 (p.cantidad - p.en_uso) AS disponibles, 
+                 p.nro_asignacion, 
+                 c.nombre AS categoria, 
+                 GROUP_CONCAT(DISTINCT CONCAT('ID ', tp.trabajo_id, ' (', t.tipo, ')') SEPARATOR ', ') AS trabajos_asignados
+          FROM producto p
+          LEFT JOIN categoria c ON p.categoria_id = c.idcategoria
+          LEFT JOIN trabajo_producto tp ON p.idproducto = tp.producto_id
+          LEFT JOIN trabajo t ON tp.trabajo_id = t.idtrabajo
+          WHERE p.eliminado = 0
+          GROUP BY p.idproducto, p.nombre, p.precio, p.estado, p.descripcion, 
+                   p.cantidad, p.en_uso, p.nro_asignacion, c.nombre";
 
+  $result = $conn->query($sql);
 
-            $result = $conn->query($sql);
+  if (!$result) {
+      die("<tr><td colspan='12' class='text-center text-danger'>❌ Error en la consulta: " . $conn->error . "</td></tr>");
+  }
 
-            // ✅ Si la consulta falla, mostrar error
-            if (!$result) {
-                die("<tr><td colspan='12' class='text-center text-danger'>❌ Error en la consulta: " . $conn->error . "</td></tr>");
-            }
+  while ($row = $result->fetch_assoc()) {
+      $precio_sin_formato = $row['precio'];
+      $precio_formateado = "$" . number_format($row['precio'], 0, '', '.');
 
-            // ✅ Mostrar los productos sin modificar la cantidad total
-            while ($row = $result->fetch_assoc()) {
-                $precio_sin_formato = $row['precio'];
-                $precio_formateado = "$" . number_format($row['precio'], 0, '', '.');
+      $cantidad_total = intval($row['cantidad_total']);
+      $en_uso = intval($row['en_uso']);
+      $disponibles = max($cantidad_total - $en_uso, 0);
+      $trabajo_asignado = !empty($row['trabajos_asignados']) ? $row['trabajos_asignados'] : "Sin asignar";
 
-                // ✅ Asegurar que los valores sean números
-                $cantidad_total = intval($row['cantidad_total']); // 🔹 Nunca se modifica
-                $en_uso = intval($row['en_uso']); // 🔹 Calculado según trabajo_producto
-                $disponibles = max($cantidad_total - $en_uso, 0); // 🔹 Se calcula dinámicamente
+      $row_class = ($cantidad_total <= 3) ? 'table-danger' : '';
 
-                // ✅ Mostrar trabajos asignados o "Sin asignar"
-                $trabajo_asignado = !empty($row['trabajos_asignados']) ? $row['trabajos_asignados'] : "Sin asignar";
+      echo "<tr class='{$row_class}'>
+        <td>{$row['idproducto']}</td>
+        <td>{$row['nombre']}</td>
+        <td data-order='{$precio_sin_formato}'>{$precio_formateado}</td>
+        <td>{$row['estado']}</td>
+        <td>{$row['categoria']}</td>
+        <td>{$row['descripcion']}</td>
+        <td>{$cantidad_total}</td>
+        <td>{$en_uso}</td>
+        <td>{$disponibles}</td>
+        <td>{$row['nro_asignacion']}</td>
+        <td>{$trabajo_asignado}</td>
+        <td class='text-nowrap'>
+            <!-- Botón Editar -->
+            <a href='editar_producto.php?id={$row['idproducto']}&return_url=" . urlencode($_SERVER['REQUEST_URI']) . "' 
+               class='btn btn-warning btn-sm btn-icon me-1' title='Editar'>
+               Editar
+            </a>
 
-                echo '<tr>
-    <td>' . $row['idproducto'] . '</td>
-    <td>' . $row['nombre'] . '</td>
-    <td data-order="' . $precio_sin_formato . '">' . $precio_formateado . '</td>
-    <td>' . $row['estado'] . '</td>
-    <td>' . $row['categoria'] . '</td>
-    <td>' . $row['descripcion'] . '</td>
-    <td>' . $cantidad_total . '</td>
-    <td>' . $en_uso . '</td>
-    <td>' . $disponibles . '</td>
-    <td>' . $row['nro_asignacion'] . '</td>
-    <td>' . $trabajo_asignado . '</td>
-    <td class="text-nowrap">
-        <!-- Botón Editar -->
-        <a href="editar_producto.php?id=' . $row['idproducto'] . '&return_url=' . urlencode($_SERVER['REQUEST_URI']) . '" 
-           class="btn btn-warning btn-sm btn-icon me-1" title="Editar">
-           Editar
-        </a>
+            <!-- Botón Aumentar -->
+            <form method='POST' action='actualizar_cantidad_producto.php' class='d-inline'>
+                <input type='hidden' name='idproducto' value='{$row['idproducto']}'>
+                <input type='hidden' name='accion' value='aumentar'>
+                <button type='submit' 
+                        class='btn btn-success btn-xs d-inline-flex align-items-center justify-content-center'
+                        style='width: 30px; height: 30px; font-size: 12px; padding: 0;' 
+                        title='Aumentar'>
+                    +
+                </button>
+            </form>
 
-        <!-- Botón Aumentar -->
-        <form method="POST" action="actualizar_cantidad_producto.php" class="d-inline">
-            <input type="hidden" name="idproducto" value="' . $row['idproducto'] . '">
-            <input type="hidden" name="accion" value="aumentar">
-            <button type="submit" 
-                    class="btn btn-success btn-xs d-inline-flex align-items-center justify-content-center"
-                    style="width: 30px; height: 30px; font-size: 12px; padding: 0;" 
-                    title="Aumentar">
-                +
-            </button>
-        </form>
-
-        <!-- Botón Reducir -->
-        <form method="POST" action="actualizar_cantidad_producto.php" class="d-inline" onsubmit="return confirmarReduccion()">
-            <input type="hidden" name="idproducto" value="' . $row['idproducto'] . '">
-            <input type="hidden" name="accion" value="reducir">
-            <button type="submit" 
-                    class="btn btn-danger btn-xs d-inline-flex align-items-center justify-content-center"
-                    style="width: 30px; height: 30px; font-size: 12px; padding: 0;" 
-                    title="Reducir">
-                -
-            </button>
-        </form>
-    </td>
-</tr>';
-
-
-            }
-            ?>
-        </tbody>
+            <!-- Botón Reducir -->
+            <form method='POST' action='actualizar_cantidad_producto.php' class='d-inline' onsubmit='return confirmarReduccion()'>
+                <input type='hidden' name='idproducto' value='{$row['idproducto']}'>
+                <input type='hidden' name='accion' value='reducir'>
+                <button type='submit' 
+                        class='btn btn-danger btn-xs d-inline-flex align-items-center justify-content-center'
+                        style='width: 30px; height: 30px; font-size: 12px; padding: 0;' 
+                        title='Reducir'>
+                    -
+                </button>
+            </form>
+        </td>
+      </tr>";
+  }
+  ?>
+</tbody>
     </table>
 </div>
 

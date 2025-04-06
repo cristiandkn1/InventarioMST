@@ -1,12 +1,12 @@
 Array
 (
-    [idproducto] => 2
+    [idproducto] => 7
     [return_url] => /empresayijo/index.php
-    [nombre] => discos de corte 4,5
-    [precio] => 4990.00
-    [estado] => Regular
-    [categoria_id] => 3
+    [nombre] => Guante cuero supervisor lavable, clarino executive negro
+    [precio] => 9190.00
+    [estado] => Excelente
+    [categoria_id] => 6
     [descripcion] => 
-    [cantidad] => 11
-    [nro_asignacion] => 2323421
+    [cantidad] => 3
+    [nro_asignacion] => 
 )

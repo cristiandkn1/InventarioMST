@@ -80,7 +80,12 @@ if (!isset($_SESSION['usuario_id'])) {
 </head>
 
 <body>
-
+<style>
+    body {
+    background-color:rgb(221, 221, 221); /* 🌑 Fondo gris oscuro */
+    color:rgb(20, 20, 20);
+  }
+</style>
 <?php $pagina = basename($_SERVER['PHP_SELF']); ?>
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">

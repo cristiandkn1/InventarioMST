@@ -88,6 +88,12 @@ if (!isset($_SESSION['usuario_id'])) {
     </div>
 </nav>
 <style>
+    body {
+    background-color:rgb(221, 221, 221); /* 🌑 Fondo gris oscuro */
+    color:rgb(20, 20, 20);
+  }
+</style>
+<style>
 /* 🎯 Estilo para el ítem activo (páginas individuales) */
 .navbar .nav-link.active,
 .navbar .dropdown-item.active-item {

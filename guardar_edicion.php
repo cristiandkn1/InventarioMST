@@ -58,8 +58,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($producto_old['estado'] != $estado_nuevo) $cambios[] = "Estado: '{$producto_old['estado']}' → '$estado_nuevo'";
     if ($producto_old['categoria_id'] != $categoria_id_nuevo) $cambios[] = "Categoría: '{$producto_old['categoria_id']}' → '$categoria_id_nuevo'";
     if ($producto_old['descripcion'] !== $descripcion_nueva) $cambios[] = "Descripción: '{$producto_old['descripcion']}' → '$descripcion_nueva'";
-    if ($producto_old['cantidad'] != $cantidad_nueva) $cambios[] = "Cantidad: '{$producto_old['cantidad']}' → '$cantidad_nueva'";
-    if ($producto_old['nro_asignacion'] !== $nro_asignacion_nuevo) $cambios[] = "Nro Asignación: '{$producto_old['nro_asignacion']}' → '$nro_asignacion_nuevo'";
+    if (intval($producto_old['cantidad']) !== $cantidad_nueva) {
+        $cambios[] = "Cantidad: '{$producto_old['cantidad']}' → '$cantidad_nueva'";
+    }    if ($producto_old['nro_asignacion'] !== $nro_asignacion_nuevo) $cambios[] = "Nro Asignación: '{$producto_old['nro_asignacion']}' → '$nro_asignacion_nuevo'";
 
     if (empty($cambios)) {
         echo "<script>alert('No se realizaron cambios.'); window.location.href='" . htmlspecialchars($return_url) . "';</script>";
@@ -102,23 +103,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $idproducto
     );
 
-    if (!$stmt->execute()) {
+    if ($stmt->execute()) {
+        // Solo si el UPDATE fue exitoso
+        $accion = "Edición de Producto";
+        $detalle = "Cambios: " . htmlspecialchars(implode(", ", $cambios));
+        $fecha_hora = date("Y-m-d H:i:s");
+    
+        $sql_historial = "INSERT INTO historial (fecha, accion, entidad, entidad_id, detalle, usuario_id)
+                          VALUES (?, ?, 'producto', ?, ?, ?)";
+        $stmt_historial = $conn->prepare($sql_historial);
+        if ($stmt_historial) {
+            $stmt_historial->bind_param("ssisi", $fecha_hora, $accion, $idproducto, $detalle, $usuario_id);
+            $stmt_historial->execute();
+            $stmt_historial->close();
+        } else {
+            file_put_contents("error_historial.log", "❌ Error al preparar historial: " . $conn->error . PHP_EOL, FILE_APPEND);
+        }
+    
+        echo "<script>alert('Producto actualizado correctamente.'); window.location.href='" . htmlspecialchars($return_url) . "';</script>";
+    } else {
         die("❌ Error al ejecutar UPDATE: " . $stmt->error);
     }
-
-    // Historial
-    $accion = "Edición de Producto";
-    $detalle = "Cambios: " . implode(", ", $cambios);
-    $fecha_hora = date("Y-m-d H:i:s");
-
-    $sql_historial = "INSERT INTO historial (fecha, accion, entidad, entidad_id, detalle, usuario_id)
-                      VALUES (?, ?, 'producto', ?, ?, ?)";
-    $stmt_historial = $conn->prepare($sql_historial);
-    $stmt_historial->bind_param("ssisi", $fecha_hora, $accion, $idproducto, $detalle, $usuario_id);
-    $stmt_historial->execute();
-    $stmt_historial->close();
-
-    echo "<script>alert('Producto actualizado correctamente.'); window.location.href='" . htmlspecialchars($return_url) . "';</script>";
 
     $stmt->close();
     $conn->close();

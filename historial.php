@@ -89,6 +89,12 @@ if (!isset($_SESSION['usuario_id'])) {
     </div>
 </nav>
 <style>
+    body {
+    background-color:rgb(221, 221, 221); /* 🌑 Fondo gris oscuro */
+    color:rgb(20, 20, 20);
+  }
+</style>
+<style>
 .navbar .nav-link.active,
 .navbar .dropdown-item.active-item {
     background-color: #0d6efd;
@@ -155,7 +161,21 @@ if (!isset($_SESSION['usuario_id'])) {
     </div>
 <?php endif; ?>
 
-
+<form method="GET" class="row g-2 mb-4">
+  <div class="col-md-4">
+    <label for="desde" class="form-label text-black">Desde:</label>
+    <input type="date" id="desde" name="desde" class="form-control"
+           value="<?= htmlspecialchars($_GET['desde'] ?? '') ?>">
+  </div>
+  <div class="col-md-4">
+    <label for="hasta" class="form-label text-black">Hasta:</label>
+    <input type="date" id="hasta" name="hasta" class="form-control"
+           value="<?= htmlspecialchars($_GET['hasta'] ?? '') ?>">
+  </div>
+  <div class="col-md-4 d-flex align-items-end">
+    <button type="submit" class="btn btn-primary w-100">Filtrar</button>
+  </div>
+</form>
 
 <div class="container mt-4">
     <h2>Historial de Movimientos</h2>
@@ -178,24 +198,38 @@ if (!isset($_SESSION['usuario_id'])) {
                 include 'db.php'; // ✅ Asegurar conexión a la BD
                 
                 // ✅ Consulta mejorada para obtener el nombre correcto de la entidad
+                $condiciones = [];
+                if (!empty($_GET['desde'])) {
+                    $desde = $conn->real_escape_string($_GET['desde']);
+                    $condiciones[] = "h.fecha >= '$desde 00:00:00'";
+                }
+                if (!empty($_GET['hasta'])) {
+                    $hasta = $conn->real_escape_string($_GET['hasta']);
+                    $condiciones[] = "h.fecha <= '$hasta 23:59:59'";
+                }
+                
+                $whereSQL = '';
+                if (count($condiciones) > 0) {
+                    $whereSQL = "WHERE " . implode(" AND ", $condiciones);
+                }
+                
                 $sql = "SELECT h.fecha, h.accion, h.entidad,
-       CASE 
-           WHEN h.entidad = 'producto' THEN (SELECT nombre FROM producto WHERE idproducto = h.entidad_id)
-           WHEN h.entidad = 'cliente' THEN (SELECT empresa FROM cliente WHERE idcliente = h.entidad_id)
-           WHEN h.entidad = 'empleado' THEN (SELECT nombre FROM empleado WHERE idempleado = h.entidad_id)
-           WHEN h.entidad = 'vehiculo' THEN (SELECT nombre FROM vehiculo WHERE idvehiculo = h.entidad_id)
-           WHEN h.entidad = 'categoria' THEN (SELECT nombre FROM categoria WHERE idcategoria = h.entidad_id)
-           WHEN h.entidad = 'trabajo' THEN (SELECT c.empresa FROM trabajo t JOIN cliente c ON t.cliente_id = c.idcliente WHERE t.idtrabajo = h.entidad_id)
-           WHEN h.entidad = 'usuario' THEN (SELECT nombre FROM usuario WHERE idusuario = h.entidad_id)
-           WHEN h.entidad = 'activo' THEN (SELECT nombre FROM activos WHERE idactivo = h.entidad_id)
-WHEN h.entidad = 'trabajo' THEN (SELECT c.empresa FROM trabajo t JOIN cliente c ON t.cliente_id = c.idcliente WHERE t.idtrabajo = h.entidad_id)
-
-           ELSE 'No registrado'
-       END AS nombre_entidad,
-       u.nombre AS usuario, h.detalle
-FROM historial h
-JOIN usuario u ON h.usuario_id = u.idusuario
-ORDER BY h.fecha DESC";
+                       CASE 
+                           WHEN h.entidad = 'producto' THEN (SELECT CONCAT('[ID ', p.idproducto, '] ', p.nombre) FROM producto p WHERE p.idproducto = h.entidad_id)
+                           WHEN h.entidad = 'cliente' THEN (SELECT empresa FROM cliente WHERE idcliente = h.entidad_id)
+                           WHEN h.entidad = 'empleado' THEN (SELECT nombre FROM empleado WHERE idempleado = h.entidad_id)
+                           WHEN h.entidad = 'vehiculo' THEN (SELECT nombre FROM vehiculo WHERE idvehiculo = h.entidad_id)
+                           WHEN h.entidad = 'categoria' THEN (SELECT nombre FROM categoria WHERE idcategoria = h.entidad_id)
+                           WHEN h.entidad = 'trabajo' THEN (SELECT CONCAT('Trabajo ID ', t.idtrabajo, ' (', c.empresa, ')') FROM trabajo t JOIN cliente c ON t.cliente_id = c.idcliente WHERE t.idtrabajo = h.entidad_id)
+                           WHEN h.entidad = 'usuario' THEN (SELECT nombre FROM usuario WHERE idusuario = h.entidad_id)
+                           WHEN h.entidad = 'activo' THEN (SELECT nombre FROM activos WHERE idactivo = h.entidad_id)
+                           ELSE 'No registrado'
+                       END AS nombre_entidad,
+                       u.nombre AS usuario, h.detalle
+                FROM historial h
+                JOIN usuario u ON h.usuario_id = u.idusuario
+                $whereSQL
+                ORDER BY h.fecha DESC";
 
                 $result = $conn->query($sql);
 
