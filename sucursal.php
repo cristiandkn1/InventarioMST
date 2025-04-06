@@ -40,10 +40,10 @@ if (!isset($_SESSION['usuario_id'])) {
 
 </head>
 <body>
-
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<?php $pagina = basename($_SERVER['PHP_SELF']); ?>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
     <div class="container-fluid">
-        <a class="navbar-brand" href="#">Sucursales</a>
+        <a class="navbar-brand" href="#">Inventario</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
             <span class="navbar-toggler-icon"></span>
         </button>
@@ -53,45 +53,48 @@ if (!isset($_SESSION['usuario_id'])) {
 
                 <!-- ✅ Dropdown Productos -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="index.php" id="inventarioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle <?= ($pagina == 'index.php' || $pagina == 'activos.php') ? 'active-parent' : '' ?>" 
+                       href="#" id="inventarioDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Productos
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="inventarioDropdown">
-                        <li><a class="dropdown-item" href="index.php">Inventario</a></li>
-                        <li><a class="dropdown-item" href="activos.php">Activos Físicos</a></li>
+                        <li><a class="dropdown-item <?= ($pagina == 'index.php') ? 'active-item' : '' ?>" href="index.php">Inventario</a></li>
+                        <li><a class="dropdown-item <?= ($pagina == 'activos.php') ? 'active-item' : '' ?>" href="activos.php">Activos Físicos</a></li>
                     </ul>
                 </li>
 
                 <!-- ✅ Dropdown Trabajos -->
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="trabajosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle <?= in_array($pagina, ['trabajos.php','clientes.php','devoluciones.php','ordenesCompra.php']) ? 'active-parent' : '' ?>" 
+                       href="#" id="trabajosDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                         Trabajos
                     </a>
                     <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="trabajosDropdown">
-                        <li><a class="dropdown-item" href="trabajos.php">Ver Trabajos</a></li>
-                        <li><a class="dropdown-item" href="clientes.php">Clientes</a></li>
-                        <li><a class="dropdown-item" href="devoluciones.php">Devoluciones</a></li>
-                        <li><a class="dropdown-item" href="ordenesCompra.php">Ordenes Compra</a></li>
-
+                        <li><a class="dropdown-item <?= ($pagina == 'trabajos.php') ? 'active-item' : '' ?>" href="trabajos.php">Ver Trabajos</a></li>
+                        <li><a class="dropdown-item <?= ($pagina == 'clientes.php') ? 'active-item' : '' ?>" href="clientes.php">Clientes</a></li>
+                        <li><a class="dropdown-item <?= ($pagina == 'devoluciones.php') ? 'active-item' : '' ?>" href="devoluciones.php">Devoluciones</a></li>
+                        <li><a class="dropdown-item <?= ($pagina == 'ordenesCompra.php') ? 'active-item' : '' ?>" href="ordenesCompra.php">Ordenes Compra</a></li>
                     </ul>
                 </li>
 
-                  <!-- ✅ Dropdown Personal -->
-                  <li class="nav-item dropdown">
-                      <a class="nav-link dropdown-toggle" href="#" id="personalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                          Personal
-                      </a>
-                      <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="personalDropdown">
-                          <li><a class="dropdown-item" href="empleados.php">Empleados</a></li>
-                          <li><a class="dropdown-item" href="usuarios.php">Usuarios</a></li>
-                      </ul>
-                  </li>
+                <!-- ✅ Dropdown Personal -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle <?= in_array($pagina, ['empleados.php','usuarios.php']) ? 'active-parent' : '' ?>" 
+                       href="#" id="personalDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Personal
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="personalDropdown">
+                        <li><a class="dropdown-item <?= ($pagina == 'empleados.php') ? 'active-item' : '' ?>" href="empleados.php">Empleados</a></li>
+                        <li><a class="dropdown-item <?= ($pagina == 'usuarios.php') ? 'active-item' : '' ?>" href="usuarios.php">Usuarios</a></li>
+                    </ul>
+                </li>
+
                 <!-- 🔹 Resto del menú -->
-                <li class="nav-item"><a class="nav-link" href="vehiculos.php">Vehículos</a></li>
-                <li class="nav-item"><a class="nav-link" href="sucursal.php">Sucursales</a></li>
-                <li class="nav-item"><a class="nav-link" href="documentos.php">Documentos</a></li>
-                <li class="nav-item"><a class="nav-link" href="historial.php">Historial</a></li>
-                
+                <li class="nav-item"><a class="nav-link <?= ($pagina == 'vehiculos.php') ? 'active' : '' ?>" href="vehiculos.php">Vehículos</a></li>
+                <li class="nav-item"><a class="nav-link <?= ($pagina == 'sucursal.php') ? 'active' : '' ?>" href="sucursal.php">Sucursales</a></li>
+                <li class="nav-item"><a class="nav-link <?= ($pagina == 'documentos.php') ? 'active' : '' ?>" href="documentos.php">Documentos</a></li>
+                <li class="nav-item"><a class="nav-link <?= ($pagina == 'historial.php') ? 'active' : '' ?>" href="historial.php">Historial</a></li>
+
             </ul>
 
             <div class="logout-container ms-auto">
@@ -102,12 +105,64 @@ if (!isset($_SESSION['usuario_id'])) {
         </div>
     </div>
 </nav>
+<style>
+/* 🎯 Estilo para el ítem activo (páginas individuales) */
+.navbar .nav-link.active,
+.navbar .dropdown-item.active-item {
+    background-color: #0d6efd;
+    color: white !important;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* 🎯 Estilo para el padre del dropdown activo */
+.navbar .nav-link.active-parent {
+    background-color: #198754;
+    color: white !important;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+/* ✅ Responsive navbar mobile */
+@media (max-width: 578px) {
+    body {
+        padding-top: 70px;
+    }
+
+    .navbar {
+        z-index: 1050;
+    }
+
+    .navbar-collapse {
+        background-color: rgba(0, 0, 0, 0.95);
+        padding: 1rem;
+        border-radius: 0 0 10px 10px;
+    }
+
+    .navbar-nav .nav-link {
+        color: white !important;
+        padding: 10px 15px;
+        font-weight: 500;
+    }
+
+    .logout-container {
+        margin-top: 1rem;
+    }
+}
+
+/* ✅ Escritorio */
+@media (min-width: 579px) {
+    body {
+        padding-top: 60px;
+    }
+}
+</style>
+
 
 <!-- jQuery (debe ir primero) -->
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<!-- Bootstrap Bundle (incluye Popper.js para modales) -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 
 <!-- SweetAlert2 (opcional pero recomendado) -->
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -177,6 +232,45 @@ function badgeEstado($estado) {
     }
 }
 ?>
+
+<style>
+@media (max-width: 578px) {
+    /* Ocultar el selector "Mostrar X registros por página" */
+    div.dataTables_length {
+        display: none !important;
+    }
+
+    /* Reducir el tamaño del buscador */
+    div.dataTables_filter input {
+        width: 130px !important;
+        font-size: 14px;
+        padding: 4px 8px;
+    }
+
+    div.dataTables_filter {
+        text-align: center;
+    }
+}
+@media (max-width: 578px) {
+    /* Estilo compacto para tabla sucursal */
+    #tablaSucursal {
+        font-size: 12px;
+    }
+
+    #tablaSucursal th,
+    #tablaSucursal td {
+        padding: 6px 8px !important;
+        white-space: nowrap;
+    }
+
+    /* Habilita scroll horizontal si la tabla es ancha */
+    #tablaSucursal {
+        overflow-x: auto;
+        display: block;
+    }
+}
+
+</style>
 
 <!-- PRODUCTOS -->
 <h5 class="mt-4">📦 Productos en esta Sucursal</h5>
