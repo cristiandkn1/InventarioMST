@@ -1,0 +1,577 @@
+
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 1
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 1
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 1
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 25
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 25
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 4
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 0
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 20
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 20
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 0
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 24
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 24
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 0
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 0
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 30
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 30
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 0
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 1
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 0
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 0
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 0
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 0
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 1
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 0
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 1
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 1
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 4
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 5
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 3
+    [cantidad_actual] => 7
+    [en_uso_actual] => 1
+    [cant_devuelta] => 1
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 7
+    [nueva_disponible] => 7
+)
+✅ UPDATE ejecutado para producto ID 3
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 5
+    [cant_devuelta] => 0
+    [cant_usada] => 0
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 29
+    [nueva_disponible] => 24
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 29
+    [en_uso_actual] => 9
+    [cant_devuelta] => 1
+    [cant_usada] => 3
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 26
+    [nueva_disponible] => 21
+)
+✅ UPDATE ejecutado para producto ID 1
+Array
+(
+    [producto_id] => 4
+    [cantidad_actual] => 9
+    [en_uso_actual] => 4
+    [cant_devuelta] => 4
+    [cant_usada] => 0
+    [nueva_en_uso] => 0
+    [nueva_cantidad] => 9
+    [nueva_disponible] => 9
+)
+✅ UPDATE ejecutado para producto ID 4
+Array
+(
+    [producto_id] => 1
+    [cantidad_actual] => 26
+    [en_uso_actual] => 10
+    [cant_devuelta] => 3
+    [cant_usada] => 2
+    [nueva_en_uso] => 5
+    [nueva_cantidad] => 24
+    [nueva_disponible] => 19
+)
+✅ UPDATE ejecutado para producto ID 1

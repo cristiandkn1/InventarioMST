@@ -1,0 +1,12 @@
+Array
+(
+    [idproducto] => 2
+    [return_url] => /empresayijo/index.php
+    [nombre] => discos de corte 4,5
+    [precio] => 4990.00
+    [estado] => Regular
+    [categoria_id] => 3
+    [descripcion] => 
+    [cantidad] => 11
+    [nro_asignacion] => 2323421
+)

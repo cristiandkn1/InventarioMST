@@ -1,0 +1,470 @@
+/* ✅ Centrar elementos del navbar */
+.navbar-nav {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+.navbar-nav .nav-item {
+    flex: 1;
+    text-align: center;
+    min-width: 150px; /* Ajusta este valor según el espacio deseado */
+}
+
+/* ✅ Mantener la altura del navbar fija */
+.navbar {
+    height: 60px; /* Evitar que el navbar crezca */
+    padding: 10px 15px;
+    display: flex;
+    align-items: center; /* Asegurar que los elementos están bien alineados */
+}
+
+/* ✅ Alinear el botón a la derecha sin afectar el navbar */
+.logout-container {
+    display: flex;
+    align-items: center; /* Centra el botón verticalmente */
+    margin-left: auto; /* Empuja el botón a la derecha */
+    padding-right: 15px; /* Pequeño margen derecho */
+}
+
+/* ✅ Hacer el botón más compacto */
+.logout-container .btn {
+    font-size: 0.875rem; /* Tamaño de letra más pequeño */
+    padding: 5px 15px; /* Ajustar padding */
+    height: 35px; /* Mantener altura fija */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    white-space: nowrap; /* Evita que el texto se divida en dos líneas */
+    min-width: 120px; /* Asegurar un ancho mínimo */
+}
+
+/* ========================= */
+/* ✅ BOTONES */
+/* ========================= */
+.btn-success {
+    background: #28a745;
+    border: none;
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: 0.3s;
+    display: block;
+    width: 100%;
+}
+
+.btn-success:hover {
+    background: #218838;
+}
+
+.btn-primary {
+    background: #007bff;
+    border: none;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.btn-primary:hover {
+    background: #0056b3;
+}
+
+.btn-danger {
+    background: #dc3545;
+    border: none;
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    border-radius: 6px;
+    transition: 0.3s;
+}
+
+.btn-danger:hover {
+    background: #bd2130;
+}
+
+
+
+/* ========================= */
+/* 🎯 RESPONSIVE MEJORADO */
+/* ========================= */
+@media (max-width: 576px) {
+    .modal-dialog {
+        max-width: 90%;
+    }
+}
+
+
+/* =========================== */
+/* 🚀 Mejoras tabla inventario */
+/* =========================== */
+
+/* Tabla más ancha y legible */
+.container {
+    max-width: 98% !important;
+    padding: 0 15px;
+}
+
+.table {
+    width: 100% !important;
+    table-layout: auto !important;
+    font-size: 0.95rem;
+}
+
+.table th,
+.table td {
+    vertical-align: middle;
+    padding: 14px;
+    text-align: center;
+    white-space: nowrap; /* Evita que las filas se dividan en múltiples líneas */
+}
+
+.table thead {
+    background-color: #343a40;
+    color: #ffffff;
+}
+
+.table tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+
+/* Asegurar que todos los botones en la columna Acciones tengan el mismo tamaño */
+.table td a.btn {
+    padding: 4px 8px; /* Ajusta el tamaño del botón */
+    font-size: 0.8rem; /* Reduce el tamaño de la fuente */
+    white-space: nowrap; /* Evita que los botones se partan */
+}
+
+/* Ajustar la columna de acciones para que los botones no sobresalgan */
+.table td .acciones-btns {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los botones se acomoden en una línea */
+    gap: 5px; /* Espacio entre botones */
+    justify-content: center; /* Centra los botones */
+}
+
+/* Agregar margen superior al botón "Devolver" para separarlo */
+.acciones-btns .btn-devolver {
+    margin-top: 8px; /* Separa el botón de los otros */
+    width: 100%; /* Asegura que no se expanda más de lo necesario */
+    text-align: center; /* Centra el texto del botón */
+}
+
+
+
+
+
+/* ✅ Ajustar columnas para que sean más grandes y se mantengan 5 por fila */
+@media (min-width: 1200px) {
+    .col-lg-2-5 {
+        flex: 0 0 19%;
+        max-width: 19%;
+    }
+}
+@media (max-width: 1199px) {
+    .col-lg-2-5 {
+        flex: 0 0 32%;
+        max-width: 32%;
+    }
+}
+@media (max-width: 991px) {
+    .col-lg-2-5 {
+        flex: 0 0 48%;
+        max-width: 48%;
+    }
+}
+@media (max-width: 767px) {
+    .col-lg-2-5 {
+        flex: 0 0 100%;
+        max-width: 100%;
+    }
+}
+
+
+.modal-open .select2-container {
+    z-index: 9999 !important;
+}
+
+/* =========================== */
+/* 🎨 MEJOR MODAL CON FONDO OSCURO Y CONTENIDO CLARO */
+/* =========================== */
+.modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.75) !important; /* Oscurece el fondo */
+}
+
+/* ✅ Modal con fondo claro y texto oscuro */
+.modal-content {
+    background: #ffffff; /* Fondo blanco */
+    color: #212529; /* Texto oscuro */
+    border-radius: 12px;
+    border: 1px solid #ddd;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+
+
+
+/* ✅ Modal Header */
+.modal-header {
+    border-bottom: 1px solid #ddd;
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+}
+
+.modal-header .modal-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: white;
+}
+
+.modal-header .btn-close {
+    filter: invert(1); /* Hace el botón de cierre visible en fondo azul */
+}
+
+
+/* ✅ Hacer los labels oscuros */
+.modal-body label {
+    color: #212529 !important; /* Color oscuro para buena legibilidad */
+    font-weight: bold;
+}
+
+
+/* ✅ Modal Footer */
+.modal-footer {
+    border-top: 1px solid #ddd;
+    background: #f1f1f1;
+    border-bottom-left-radius: 12px;
+    border-bottom-right-radius: 12px;
+}
+
+/* ✅ Labels ahora son completamente visibles */
+.modal-body label {
+    color: #000000 !important; /* Texto en negro */
+    font-weight: bold;
+}
+
+/* =========================== */
+/* 📌 MEJORAS EN LOS INPUTS Y SELECTS */
+/* =========================== */
+.modal-body input,
+.modal-body select,
+.modal-body textarea {
+    background: #ffffff;
+    color: #212529;
+    border: 1px solid #ced4da;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 1rem;
+    transition: 0.3s;
+}
+
+/* ✅ Hover y Focus */
+.modal-body input:hover,
+.modal-body select:hover,
+.modal-body textarea:hover,
+.modal-body input:focus,
+.modal-body select:focus,
+.modal-body textarea:focus {
+    border-color: #007bff;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+/* ✅ Botones dentro del modal */
+.modal-footer .btn {
+    padding: 10px 15px;
+    font-size: 1rem;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+/* =========================== */
+/* 📌 MEJORAS PARA SELECT2 */
+/* =========================== */
+.modal-open .select2-container {
+    z-index: 9999 !important;
+}
+
+.select2-container {
+    width: 100% !important;
+}
+
+.select2-container .select2-selection--single {
+    height: 48px; /* ✅ Hacerlo más grande */
+    border-radius: 8px;
+    border: 1px solid #ced4da;
+    background: #ffffff;
+    color: #212529;
+    padding-left: 10px;
+    font-size: 1rem;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: 48px; /* ✅ Alinear texto */
+    font-size: 1rem;
+    color: #212529;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__arrow {
+    height: 48px;
+    right: 10px;
+    fill: #495057;
+}
+
+/* ✅ Hacer que los dropdowns del Select2 sean más anchos */
+.select2-dropdown {
+    border-radius: 8px;
+    font-size: 1rem;
+    border: 1px solid #ced4da;
+    background: white;
+    padding: 10px;
+}
+
+/* =========================== */
+/* 🎯 RESPONSIVE MEJORADO PARA EL MODAL */
+/* =========================== */
+@media (max-width: 576px) {
+    .modal-dialog {
+        max-width: 90%;
+    }
+}
+
+
+
+/* ✅ Estilos solo para el Select2 de materiales */
+.select2-container--default .select2-material .select2-selection--single {
+    background-color: #f8f9fa !important;
+    border: 1px solid #ced4da !important;
+    border-radius: 5px !important;
+    font-size: 14px !important;
+    padding: 5px 10px !important;
+}
+
+/* ✅ Ajustar el dropdown de Select2 */
+.select2-material .select2-dropdown {
+    z-index: 99999 !important; /* Evita que se oculte */
+}
+
+/* ✅ Ajustar el campo de búsqueda */
+.select2-material .select2-search__field {
+    width: 100% !important;
+}
+
+
+
+/* Estilo para la carta de vehículos */
+.card {
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.3s ease-in-out;
+}
+
+/* Efecto de sombra al pasar el mouse */
+.card:hover {
+    transform: scale(1.03);
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.2);
+}
+
+/* Imagen con efecto de cursor pointer */
+/* Imagen con efecto de cursor pointer */
+.card-img-top {
+    cursor: pointer;
+    transition: filter 0.3s ease-in-out;
+}
+
+/* Efecto de oscurecimiento al pasar el mouse sobre la imagen */
+.card-img-top:hover {
+    filter: brightness(0.7);
+}
+
+
+/* Centrado del título */
+.card-title {
+    font-size: 1.1rem;
+    font-weight: bold;
+    text-align: center;
+    color: #333;
+}
+
+/* Mejorar la presentación del texto */
+.card-text {
+    font-size: 0.9rem;
+    color: #0f0f0f;
+}
+
+/* Espaciado y estilo para la fecha de vencimiento */
+.card-text strong {
+    display: block;
+    margin-bottom: 3px;
+    color: #141313;
+}
+
+/* Ajustes para evitar que el texto se desborde */
+.card-body {
+    padding: 15px;
+    text-align: left;
+}
+
+
+/* ✅ Corregir estilos para el input de SweetAlert2 */
+.swal2-popup input.swal2-input {
+    pointer-events: auto !important;
+    opacity: 1 !important;
+    background-color: #fff !important;
+    color: #000 !important;
+    z-index: 99999 !important;
+  }
+
+
+
+.nav-item.dropdown:hover .dropdown-menu {
+    display: block;
+    margin-top: 0; /* Opcional: evita salto visual */
+}
+
+#filtroCategoria {
+    width: 200px;              /* Ajusta el ancho a tu gusto */
+    font-size: 14px;           /* Tamaño de texto */
+    padding: 4px 8px;          /* Espaciado interno */
+    margin-bottom: 15px;       /* Espacio debajo del select */
+    background-color: #535151; /* Fondo oscuro */
+    color: #ffffff;            /* Texto blanco */
+    border: 1px solid #555555; /* Borde oscuro */
+}
+
+.filtro-categoria-container {
+    position: absolute;        /* Te permite posicionarlo con top / right / left */
+    top: 90px;                /* Cambia según tu diseño */
+    right: 1.5%;               /* O usa left: 50px para otro lado */
+    z-index: 999;              /* Para que quede encima si lo necesitas */
+}/* Estilo para filas seleccionadas */
+tr.selected {
+    background-color: #e6f7ff !important;
+}
+
+/* Estilo para botón de eliminar */
+.btn-eliminar-material {
+    transition: all 0.3s ease;
+}
+
+.btn-eliminar-material:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+}
+
+/* Animación para filas que se eliminan */
+@keyframes fadeOutRow {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+.fade-out {
+    animation: fadeOutRow 0.3s forwards;
+}

@@ -1,0 +1,4 @@
+
+guardar en historial la edicion de los trabajos
+
+agregar precio a los activos?
