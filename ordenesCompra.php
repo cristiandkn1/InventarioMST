@@ -11,13 +11,84 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 ?>
 
+
+<?php
+if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_FILES['archivo_oc'])) {
+    $archivo = $_FILES['archivo_oc'];
+    $nombre = basename($archivo['name']);
+    $ruta = 'ordenes_subidas/' . $nombre;
+    $extensiones_permitidas = ['pdf', 'xlsx', 'xls', 'csv', 'docx', 'jpg', 'jpeg', 'png', 'webp', 'gif'];
+    $extension = strtolower(pathinfo($nombre, PATHINFO_EXTENSION)); // 👈 MOVER AQUÍ
+
+    $usuario_id = $_SESSION['usuario_id'] ?? 0;
+
+    if (in_array($extension, $extensiones_permitidas)) {
+        // Comprimir si es imagen JPG/JPEG
+        if (in_array($extension, ['jpg', 'jpeg'])) {
+            $image = imagecreatefromjpeg($archivo['tmp_name']);
+            imagejpeg($image, $ruta, 75); // Calidad 75%
+            imagedestroy($image);
+        } elseif (in_array($extension, ['png'])) {
+            $image = imagecreatefrompng($archivo['tmp_name']);
+            imagepng($image, $ruta, 7); // Compresión PNG
+            imagedestroy($image);
+        } else {
+            move_uploaded_file($archivo['tmp_name'], $ruta);
+        }
+
+        // Guardar en historial
+        $fecha = date("Y-m-d H:i:s");
+        $accion = "Subida de Orden de Compra";
+        $entidad = "orden_compra";
+        $detalle = "Archivo subido: $nombre";
+
+        $stmt = $conn->prepare("INSERT INTO historial (fecha, accion, entidad, entidad_id, detalle, usuario_id)
+                                VALUES (?, ?, ?, NULL, ?, ?)");
+        $stmt->bind_param("ssssi", $fecha, $accion, $entidad, $detalle, $usuario_id);
+        $stmt->execute();
+        $stmt->close();
+
+        echo "<script>Swal.fire('✅ Éxito', 'Orden de compra subida correctamente.', 'success');</script>";
+    } else {
+        echo "<script>Swal.fire('⚠️ Archivo no válido', 'Se permiten PDF, Excel, Word e imágenes (jpg, png, etc).', 'warning');</script>";
+    }
+}
+?>
+
+
+<?php
+// 🔴 Procesar eliminación del archivo
+if (isset($_GET['eliminar']) && !empty($_GET['eliminar'])) {
+    $archivo_eliminar = basename($_GET['eliminar']);
+    $ruta = "ordenes_subidas/$archivo_eliminar";
+    if (file_exists($ruta)) {
+        unlink($ruta); // Eliminar archivo
+        echo "<script>
+            Swal.fire('✅ Eliminado', 'El archivo ha sido eliminado.', 'success');
+            setTimeout(() => window.location.href = 'ordenesCompra.php', 1000);
+        </script>";
+    } else {
+        echo "<script>Swal.fire('⚠️ Error', 'El archivo no existe.', 'error');</script>";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
     <title>Ordenes de Compra</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <!-- FontAwesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+
+    <!-- Select2 -->
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+    <!-- SweetAlert2 -->
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
 <body>
 
@@ -146,8 +217,72 @@ if (!isset($_SESSION['usuario_id'])) {
 }
 </style>
 
+<!-- 🔘 Botón para mostrar sección oculta -->
+<div class="container mt-4">
+  <button class="btn btn-outline-secondary mb-3" onclick="document.getElementById('subidaOC').classList.toggle('d-none')">
+    📂 Ver Órdenes de Compra Subidas
+  </button>
+</div>
+
+<!-- 🔒 Sección OCULTA por defecto -->
+<div class="container mt-4 d-none" id="subidaOC">
+  <h3 class="text-center mb-4">📂 Subir Orden de Compra Existente</h3>
+  <form method="POST" enctype="multipart/form-data" class="mb-4">
+    <div class="input-group">
+      <input type="file" name="archivo_oc" class="form-control" required>
+      <button class="btn btn-primary" type="submit">Subir</button>
+    </div>
+  </form>
+
+  <h5 class="mt-4 mb-3">🧾 Órdenes de Compra Subidas</h5>
+  <table class="table table-bordered table-hover bg-white">
+    <thead class="table-dark">
+      <tr>
+        <th>Nombre del Archivo</th>
+        <th>Ver / Descargar</th>
+      </tr>
+    </thead>
+    <tbody>
+      <?php
+      $archivos = glob('ordenes_subidas/*');
+      if (count($archivos) == 0) {
+          echo "<tr><td colspan='2' class='text-center'>No hay órdenes subidas</td></tr>";
+      } else {
+        foreach ($archivos as $archivo) {
+            $nombre_archivo = basename($archivo);
+            echo "<tr>
+                    <td>$nombre_archivo</td>
+                    <td>
+                      <a href='$archivo' target='_blank' class='btn btn-sm btn-outline-primary'>Ver</a>
+                      <a href='$archivo' download class='btn btn-sm btn-outline-success'>Descargar</a>
+                      <a href='ordenesCompra.php?eliminar=$nombre_archivo' class='btn btn-sm btn-outline-danger'
+                         onclick=\"return confirm('¿Estás seguro de eliminar este archivo?')\">Eliminar</a>
+                    </td>
+                  </tr>";
+        }
+        
+      }
+      ?>
+    </tbody>
+  </table>
+</div>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<!-- Chart.js -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<!-- Scripts -->
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.5/js/dataTables.bootstrap5.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.3/dist/sweetalert2.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+
+
 </body>
 </html>
