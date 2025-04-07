@@ -52,6 +52,17 @@ $stmt_trabajadores->bind_param("i", $trabajo_id);
 $stmt_trabajadores->execute();
 $trabajadores = $stmt_trabajadores->get_result();
 
+class MYPDF extends TCPDF {
+    public function Header() {
+        $logo_path = __DIR__ . '/img/logo.png';
+        if (file_exists($logo_path)) {
+            $this->Image($logo_path, 10, 10, 25);
+        }
+
+        // ❌ Esto NO tiene efecto aquí para el contenido principal
+        // $this->SetY(60);
+    }
+}
 
 
 
@@ -60,11 +71,21 @@ $trabajadores = $stmt_trabajadores->get_result();
 
 
 
+// Crear PDF con clase personalizada
+$pdf = new MYPDF();
 
-// Crear nuevo PDF
-$pdf = new TCPDF();
-$pdf->SetAutoPageBreak(TRUE, 10);
+// ✅ Mueve el contenido hacia abajo en TODAS las páginas
+$pdf->SetMargins(15, 40, 15); // ← aquí defines el margen superior (45px después del logo)
+
+$pdf->SetAutoPageBreak(TRUE, 20);
 $pdf->AddPage();
+
+// Ya NO necesitas hacer $pdf->SetY(60); aquí
+
+// 🔹 Solo en la primera página bajamos manualmente el contenido (porque no queremos tanto margen)
+$pdf->SetY(20); // Puedes ajustar esto según el espacio que quieras
+
+
 
 // **Título del documento**
 $pdf->SetFont('helvetica', 'B', 16);
@@ -76,186 +97,234 @@ $pdf->Ln(5);
 // **TABLA - INFORMACIÓN GENERAL**
 $pdf->SetFont('helvetica', 'B', 12);
 $pdf->Cell(0, 10, "Información General", 0, 1, 'L');
-$pdf->SetFont('helvetica', '', 11);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+$pdf->SetFont('helvetica', '', 10);
 
 $tbl = <<<EOD
-<table border="1" cellpadding="5">
+<style>
+    table {
+        border-collapse: collapse;
+        font-size: 9.5pt;
+        margin-left: -10px; /* 🔹 Corrección para que no se salga de la hoja */
+    }
+    td {
+        border: 0.4px solid #444;
+        padding: 3px;
+        vertical-align: top;
+    }
+    .titulo {
+        background-color: #dce6f1;
+        font-weight: bold;
+        width: 28%;
+    }
+    .valor {
+        background-color: #f9f9f9;
+        width: 22%;
+    }
+</style>
+<table>
     <tr>
-    <td><strong>Tipo de Trabajo:</strong> {$trabajo['tipo']}</td>
-    <td><strong>Título:</strong> {$trabajo['titulo']}</td>
-    <td><strong>Empresa:</strong> {$trabajo['empresa']}</td>
-    <td><strong>N° Orden:</strong> {$trabajo['nro_orden']}</td>
-</tr>
-<tr>
-    <td><strong>Fecha de Creación:</strong> {$trabajo['fecha_creacion']}</td>
-    <td><strong>Fecha de Entrega:</strong> {$trabajo['fecha_entrega']}</td>
-    <td><strong>Estado:</strong> {$trabajo['estado']}</td>
-    <td><strong>Clase de Orden:</strong> {$trabajo['clase_orden']}</td>
-</tr>
-<tr>
-    <td><strong>Clase de Actividad PL:</strong> {$trabajo['clase_actividad_pl']}</td>
-    <td><strong>Prioridad:</strong> {$trabajo['prioridad']}</td>
-    <td><strong>Revisión:</strong> {$trabajo['revision']}</td>
-    <td><strong>Grupo de Planificación:</strong> {$trabajo['grp_planificacion']}</td>
-</tr>
-<tr>
-    <td><strong>Punto de Trabajo Responsable:</strong> {$trabajo['pto_trab_responsable']}</td>
-    <td><strong>Ubicación Técnica:</strong> {$trabajo['ubicacion_tecnica']}</td>
-    <td><strong>Equipo:</strong> {$trabajo['equipo']}</td>
-    <td><strong>Denominación del Equipo:</strong> {$trabajo['den_equipo']}</td>
-</tr>
-<tr>
-    <td><strong>Reserva:</strong> {$trabajo['reserva']}</td>
-    <td><strong>Solicitud de Pedido:</strong> {$trabajo['sol_ped']}</td>
-    <td colspan="2"></td>
-</tr>
-<tr>
-    <td><strong>Fecha de Creación:</strong> {$trabajo['fecha_creacion']}</td>
-    <td><strong>Fecha de Entrega:</strong> {$trabajo['fecha_entrega']}</td>
-    <td><strong>Fecha de Inicio:</strong> {$trabajo['fecha_inicio']}</td>
-    <td><strong>Duración Estimada (Días):</strong> {$trabajo['duracion_dias']}</td>
-</tr>
-<tr>
-    <td><strong>Hora de Inicio:</strong> {$trabajo['hora_inicio']}</td>
-    <td><strong>Hora de Fin:</strong> {$trabajo['hora_fin']}</td>
-    <td colspan="2"></td>
-</tr>
-
-
-
+        <td class="titulo">Tipo de Trabajo</td><td class="valor">{$trabajo['tipo']}</td>
+        <td class="titulo">Título</td><td class="valor">{$trabajo['titulo']}</td>
+    </tr>
+    <tr>
+        <td class="titulo">Empresa Mandante</td><td class="valor">{$trabajo['empresa']}</td>
+        <td class="titulo">N° Orden</td><td class="valor">{$trabajo['nro_orden']}</td>
+    </tr>
+    <tr>
+        <td class="titulo">Fecha de Creación</td><td class="valor">{$trabajo['fecha_creacion']}</td>
+        <td class="titulo">Fecha de Entrega</td><td class="valor">{$trabajo['fecha_entrega']}</td>
+    </tr>
+    <tr>
+        <td class="titulo">Estado</td><td class="valor">{$trabajo['estado']}</td>
+        <td class="titulo">Clase de Orden</td><td class="valor">{$trabajo['clase_orden']}</td>
+    </tr>
+    <tr>
+        <td class="titulo">Clase de Actividad PL</td><td class="valor">{$trabajo['clase_actividad_pl']}</td>
+        <td class="titulo">Prioridad</td><td class="valor">{$trabajo['prioridad']}</td>
+    </tr>
+    <tr>
+        <td class="titulo">Revisión</td><td class="valor">{$trabajo['revision']}</td>
+        <td class="titulo">Grupo de Planificación</td><td class="valor">{$trabajo['grp_planificacion']}</td>
+    </tr>
+    <tr>
+        <td class="titulo">Punto de Trabajo Responsable</td><td class="valor">{$trabajo['pto_trab_responsable']}</td>
+        <td class="titulo">Ubicación Técnica</td><td class="valor">{$trabajo['ubicacion_tecnica']}</td>
+    </tr>
+    <tr>
+        <td class="titulo">Equipo</td><td class="valor">{$trabajo['equipo']}</td>
+        <td class="titulo">Denominación del Equipo</td><td class="valor">{$trabajo['den_equipo']}</td>
+    </tr>
+    <tr>
+        <td class="titulo">Reserva</td><td class="valor">{$trabajo['reserva']}</td>
+        <td class="titulo">Solicitud de Pedido</td><td class="valor">{$trabajo['sol_ped']}</td>
+    </tr>
+    <tr>
+        <td class="titulo">Fecha de Inicio</td><td class="valor">{$trabajo['fecha_inicio']}</td>
+        <td class="titulo">Duración Estimada (Días)</td><td class="valor">{$trabajo['duracion_dias']}</td>
+    </tr>
+    <tr>
+        <td class="titulo">Hora de Inicio</td><td class="valor">{$trabajo['hora_inicio']}</td>
+        <td class="titulo">Hora de Fin</td><td class="valor">{$trabajo['hora_fin']}</td>
+    </tr>
 </table>
 EOD;
 
 $pdf->writeHTML($tbl, true, false, false, false, '');
+$pdf->Ln(1);
 
 
 
-// Espaciado
-$pdf->Ln(5);
 
-// 🔹 **Nueva Sección: Descripción de la Orden**
+
+
+// 🔷 SECCIÓN: Descripción de la Orden
 $pdf->SetFont('helvetica', 'B', 12);
+$pdf->SetTextColor(33, 37, 41); // texto oscuro
 $pdf->Cell(0, 10, "Descripción de la Orden", 0, 1, 'L');
-$pdf->SetFont('helvetica', '', 11);
-
-// 📌 Se agregó el campo "Descripción de la Orden" aquí
-$pdf->MultiCell(0, 10, $trabajo['descripcion_orden'], 1, 'L');
-
-// Espaciado
+$pdf->SetFont('helvetica', '', 10);
+$pdf->SetFillColor(245, 245, 245); // fondo gris claro
+$pdf->SetDrawColor(180, 180, 180); // borde gris
+$pdf->MultiCell(0, 15, $trabajo['descripcion_orden'], 1, 'L', true);
 $pdf->Ln(5);
 
-// 🔹 **Nueva Sección: Estado del Trabajo**
+// 🔷 SECCIÓN: Estado del Trabajo
 $pdf->SetFont('helvetica', 'B', 12);
+$pdf->SetTextColor(33, 37, 41);
 $pdf->Cell(0, 10, "Estado del Trabajo", 0, 1, 'L');
-$pdf->SetFont('helvetica', '', 11);
-
-// 📌 Se agregó el campo "Estado" aquí
-$pdf->MultiCell(0, 10, $trabajo['estado'], 1, 'L');
-
-// Espaciado
+$pdf->SetFont('helvetica', '', 10);
+$pdf->SetFillColor(255, 255, 255); // fondo blanco
+$pdf->SetDrawColor(180, 180, 180);
+$pdf->MultiCell(0, 10, $trabajo['estado'], 1, 'L', true);
 $pdf->Ln(5);
 
-// **TABLA - DESCRIPCIÓN DETALLADA**
+// 🔷 SECCIÓN: Descripción Detallada
 $pdf->SetFont('helvetica', 'B', 12);
+$pdf->SetTextColor(33, 37, 41);
 $pdf->Cell(0, 10, "Descripción Detallada", 0, 1, 'L');
-$pdf->SetFont('helvetica', '', 11);
-
-// 📌 Se mantuvo la sección de "Descripción Detallada"
-$pdf->MultiCell(0, 10, $trabajo['descripcion_detallada'], 1, 'L');
-
-
-
-
-
-
-// Espaciado
+$pdf->SetFont('helvetica', '', 10);
+$pdf->SetFillColor(245, 245, 245);
+$pdf->SetDrawColor(180, 180, 180);
+$pdf->MultiCell(0, 25, $trabajo['descripcion_detallada'], 1, 'L', true);
 $pdf->Ln(5);
 
-// 🔹 **Nueva Sección: Operaciones**
-$pdf->SetFont('helvetica', 'B', 12);
-$pdf->Cell(0, 10, "Operaciones", 0, 1, 'L');
-$pdf->SetFont('helvetica', '', 11);
 
-// 📌 Construcción de la tabla de operaciones con columnas ajustadas
-$tbl_operaciones = '<table border="1" cellpadding="5">
+
+
+
+// 🔷 SECCIÓN: Operaciones
+$pdf->SetFont('helvetica', 'B', 12);
+$pdf->SetTextColor(33, 37, 41);
+$pdf->Cell(0, 10, "Operaciones", 0, 1, 'L');
+$pdf->SetFont('helvetica', '', 10);
+
+// ✅ Tabla con columnas iguales (14.2857% * 7 = 100%)
+$tbl_operaciones = <<<EOD
+<style>
+    table.op {
+        border-collapse: collapse;
+        font-size: 9pt;
+        width: 100%;
+    }
+    table.op th {
+        background-color: #f0f0f0;
+        border: 1px solid #999;
+        padding: 5px;
+        font-weight: bold;
+        text-align: center;
+    }
+    table.op td {
+        border: 1px solid #ccc;
+        padding: 4px;
+        text-align: center;
+    }
+</style>
+<table class="op">
     <thead>
         <tr>
-            <th width="12%"><strong>Operación</strong></th>
-            <th width="15%"><strong>Pto. Trab.</strong></th>
-            <th width="20%"><strong>Desc. Pto. Trab.</strong></th>
-            <th width="29%"><strong>Desc. Oper.</strong></th>
-            <th width="8%"><strong>N° Pers.</strong></th>
-            <th width="8%"><strong>H Est.</strong></th>
-            <th width="8%"><strong>HH Tot. Prog.</strong></th>
+            <th width="14.2857%">Operación</th>
+            <th width="14.2857%">Pto. Trab.</th>
+            <th width="14.2857%">Desc. Pto. Trab.</th>
+            <th width="14.2857%">Desc. Operación</th>
+            <th width="14.2857%">N° Pers.</th>
+            <th width="14.2857%">H Est.</th>
+            <th width="14.2857%">HH Prog.</th>
         </tr>
     </thead>
-    <tbody>';
+    <tbody>
+EOD;
 
 while ($op = $operaciones->fetch_assoc()) {
     $tbl_operaciones .= '<tr>
-        <td width="12%">' . htmlspecialchars($op['operacion']) . '</td>
-        <td width="15%">' . htmlspecialchars($op['pto_trab']) . '</td>
-        <td width="20%">' . htmlspecialchars($op['desc_pto_trab']) . '</td>
-        <td width="29%">' . htmlspecialchars($op['desc_oper']) . '</td>
-        <td width="8%">' . htmlspecialchars($op['n_pers']) . '</td>
-        <td width="8%">' . htmlspecialchars($op['h_est']) . '</td>
-        <td width="8%">' . htmlspecialchars($op['hh_tot_prog']) . '</td>
+        <td>' . htmlspecialchars($op['operacion']) . '</td>
+        <td>' . htmlspecialchars($op['pto_trab']) . '</td>
+        <td>' . htmlspecialchars($op['desc_pto_trab']) . '</td>
+        <td>' . htmlspecialchars($op['desc_oper']) . '</td>
+        <td>' . htmlspecialchars($op['n_pers']) . '</td>
+        <td>' . htmlspecialchars($op['h_est']) . '</td>
+        <td>' . htmlspecialchars($op['hh_tot_prog']) . '</td>
     </tr>';
 }
 
 $tbl_operaciones .= '</tbody></table>';
 
-// ✅ Agregar la tabla de operaciones al PDF
+// ✅ Imprimir tabla en el PDF
 $pdf->writeHTML($tbl_operaciones, true, false, false, false, '');
 
 
-
 // Espaciado
-$pdf->Ln(5);
+$pdf->Ln(2);
 
-// 🔹 **Nueva Sección: Materiales/Productos**
+// 🔹 SECCIÓN: Materiales Utilizados
 $pdf->SetFont('helvetica', 'B', 12);
-$pdf->Cell(0, 10, "Materiales Utilizados", 0, 1, 'L');
-$pdf->SetFont('helvetica', '', 11);
+$pdf->SetTextColor(33, 37, 41);
+$pdf->Cell(0, 10, " Materiales Utilizados", 0, 1, 'L');
+$pdf->SetFont('helvetica', '', 10);
 
-// 📌 Construcción de la tabla de materiales con columnas ajustadas
-$tbl_materiales = '<table border="1" cellpadding="5">
+// ✅ Tabla con 4 columnas iguales (25% cada una)
+$tbl_materiales = <<<EOD
+<style>
+    table.mat {
+        border-collapse: collapse;
+        font-size: 9pt;
+        width: 100%;
+    }
+    table.mat th {
+        background-color: #e9ecef;
+        border: 1px solid #999;
+        padding: 5px;
+        font-weight: bold;
+        text-align: center;
+    }
+    table.mat td {
+        border: 1px solid #ccc;
+        padding: 4px;
+        text-align: center;
+    }
+</style>
+<table class="mat">
     <thead>
         <tr>
-            <th width="23%"><strong>Producto</strong></th>
-            <th width="50%"><strong>Descripción</strong></th>
-            <th width="15%"><strong>Número de Parte</strong></th>
-            <th width="12%"><strong>Cantidad</strong></th>
+            <th width="25%">Producto</th>
+            <th width="25%">Descripción</th>
+            <th width="25%">Número de Parte</th>
+            <th width="25%">Cantidad</th>
         </tr>
     </thead>
-    <tbody>';
+    <tbody>
+EOD;
 
 while ($mat = $materiales->fetch_assoc()) {
     $tbl_materiales .= '<tr>
-        <td width="23%">' . htmlspecialchars($mat['nombre']) . '</td>
-        <td width="50%">' . htmlspecialchars($mat['descripcion']) . '</td>
-        <td width="15%">' . htmlspecialchars($mat['numero_parte']) . '</td>
-        <td width="12%">' . htmlspecialchars($mat['cantidad']) . '</td>
+        <td>' . htmlspecialchars($mat['nombre']) . '</td>
+        <td>' . htmlspecialchars($mat['descripcion']) . '</td>
+        <td>' . htmlspecialchars($mat['numero_parte']) . '</td>
+        <td>' . htmlspecialchars($mat['cantidad']) . '</td>
     </tr>';
 }
 
 $tbl_materiales .= '</tbody></table>';
 
-// ✅ Agregar la tabla de materiales al PDF
+// ✅ Imprimir tabla en el PDF
 $pdf->writeHTML($tbl_materiales, true, false, false, false, '');
 
 
@@ -264,35 +333,101 @@ $pdf->writeHTML($tbl_materiales, true, false, false, false, '');
 // Espaciado
 $pdf->Ln(5);
 
-// 🔹 **Nueva Sección: Trabajadores Asignados**
+// 🔹 SECCIÓN: Trabajadores Asignados
 $pdf->SetFont('helvetica', 'B', 12);
-$pdf->Cell(0, 10, "Trabajadores Asignados", 0, 1, 'L');
-$pdf->SetFont('helvetica', '', 11);
+$pdf->SetTextColor(33, 37, 41);
+$pdf->Cell(0, 10, " Trabajadores Asignados", 0, 1, 'L');
+$pdf->SetFont('helvetica', '', 10);
 
-// 📌 Construcción de la tabla de trabajadores con columnas ajustadas
-$tbl_trabajadores = '<table border="1" cellpadding="5">
+// ✅ Tabla con columnas iguales y estilo uniforme
+$tbl_trabajadores = <<<EOD
+<style>
+    table.trab {
+        border-collapse: collapse;
+        font-size: 9pt;
+        width: 100%;
+    }
+    table.trab th {
+        background-color: #e9ecef;
+        border: 1px solid #999;
+        padding: 5px;
+        font-weight: bold;
+        text-align: center;
+    }
+    table.trab td {
+        border: 1px solid #ccc;
+        padding: 4px;
+        text-align: center;
+    }
+</style>
+<table class="trab">
     <thead>
         <tr>
-            <th width="70%"><strong>Trabajador</strong></th>
-            <th width="30%"><strong>Horas Trabajadas</strong></th>
+            <th width="50%">Trabajador</th>
+            <th width="50%">Horas Trabajadas</th>
         </tr>
     </thead>
-    <tbody>';
+    <tbody>
+EOD;
 
 while ($trab = $trabajadores->fetch_assoc()) {
     $tbl_trabajadores .= '<tr>
-        <td width="70%">' . htmlspecialchars($trab['trabajador']) . '</td>
-        <td width="30%">' . htmlspecialchars($trab['horas_trabajadas']) . '</td>
+        <td>' . htmlspecialchars($trab['trabajador']) . '</td>
+        <td>' . htmlspecialchars($trab['horas_trabajadas']) . '</td>
     </tr>';
 }
 
 $tbl_trabajadores .= '</tbody></table>';
 
-// ✅ Agregar la tabla de trabajadores al PDF
+// ✅ Agregar la tabla al PDF
 $pdf->writeHTML($tbl_trabajadores, true, false, false, false, '');
 
+// Espaciado
+$pdf->Ln(10);
 
+// 🔹 SECCIÓN: Registro Final de Actividad - Firmas
+$pdf->SetFont('helvetica', 'B', 12);
+$pdf->SetTextColor(33, 37, 41);
+$pdf->Cell(0, 10, " Registro Final de Actividad", 0, 1, 'L');
+$pdf->SetFont('helvetica', '', 10);
 
+$tbl_firmas = <<<EOD
+<style>
+    table.firma {
+        border-collapse: collapse;
+        font-size: 9pt;
+        width: 100%;
+        margin-top: 10px;
+    }
+    table.firma td {
+        border: 1px solid #ccc;
+        text-align: left;
+    }
+    .label {
+        font-weight: bold;
+        background-color: #f8f9fa;
+        height: 25px; /* altura más baja para la fila de etiquetas */
+        padding: 4px;
+    }
+    .firma-space {
+        height: 60px; /* altura mayor para la fila de firmas */
+        padding: 4px;
+    }
+</style>
+<table class="firma">
+    <tr>
+        <td class="label" width="50%">Firma Responsable:</td>
+        <td class="label" width="50%">Firma Revisión Documento:</td>
+    </tr>
+    <tr>
+        <td class="firma-space"></td>
+        <td class="firma-space"></td>
+    </tr>
+</table>
+EOD;
+
+// ✅ Agregar tabla de firmas al PDF
+$pdf->writeHTML($tbl_firmas, true, false, false, false, '');
 
 // Generar archivo PDF y descargarlo
 $pdf->Output("trabajo_$trabajo_id.pdf", "D");
