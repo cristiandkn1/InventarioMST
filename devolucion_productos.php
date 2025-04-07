@@ -34,6 +34,72 @@ $envios = $conn->query($sql);
 <script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+<style>
+/* 🧩 Estilo base para escritorio */
+#tablaDevoluciones {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+
+#tablaDevoluciones th, #tablaDevoluciones td {
+  border: 1px solid #dee2e6;
+  padding: 10px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+/* 📱 Vista tipo tarjeta para móviles (≤ 578px) */
+@media (max-width: 578px) {
+  #tablaDevoluciones thead {
+    display: none;
+  }
+
+  #tablaDevoluciones tbody, 
+  #tablaDevoluciones tr, 
+  #tablaDevoluciones td {
+    display: block;
+    width: 100%;
+    font-size: 12px; /* Más pequeño */
+  }
+
+  #tablaDevoluciones tr {
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    background-color: #fefefe;
+    padding: 8px;
+  }
+
+  #tablaDevoluciones td {
+    text-align: left;
+    padding-left: 45%;
+    padding-top: 6px;
+    padding-bottom: 6px;
+    border: none;
+    border-bottom: 1px solid #eee;
+    position: relative;
+  }
+
+  #tablaDevoluciones td::before {
+    content: attr(data-label);
+    position: absolute;
+    left: 10px;
+    top: 6px;
+    font-weight: bold;
+    color: #444;
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  /* Botón más pequeño en móviles */
+  #tablaDevoluciones .btn {
+    padding: 4px 8px;
+    font-size: 12px;
+  }
+}
+</style>
 
 <div class="container mt-5">
     <h3 class="mb-4 text-center">Envíos de Productos</h3>
