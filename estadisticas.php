@@ -152,6 +152,7 @@ while ($row = $result->fetch_assoc()) {
 
 <!DOCTYPE html>
 <html lang="es">
+  
 <head>
 <style>
   @media (max-width: 768px) {
