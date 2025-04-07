@@ -373,13 +373,24 @@ canvas {
     </div>
 
     <!-- 🔧 Productos usados -->
-    <div class="col-md-4">
-      <div class="card card-dark p-3">
-      <h6 class="text-center">
-  <i class="fas fa-tools me-2 text-success"></i> Productos más usados
-</h6>      <canvas id="graficoProductosUsados"></canvas>
-      </div>
-    </div>
+<div class="col-md-4">
+  <div class="card card-dark p-3">
+    <h6 class="text-center mb-3">
+      <i class="fas fa-tools me-2 text-success"></i> Productos más usados
+    </h6>
+
+    <ul class="list-group list-group-flush">
+      <?php
+      for ($i = 0; $i < count($productosNombres); $i++) {
+          $nombre = htmlspecialchars($productosNombres[$i]);
+          $cantidad = (int)$productosUsados[$i];
+          echo "<li class='d-flex justify-content-between align-items-center bg-dark text-white border-bottom'>
+        $nombre
+        <span class='badge bg-success rounded-pill'>$cantidad</span>
+      </li>";
+      }
+      ?>
+    </ul>
   </div>
 </div>
 
