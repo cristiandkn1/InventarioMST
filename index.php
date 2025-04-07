@@ -230,21 +230,22 @@ $result->data_seek(0); // Reiniciar otra vez para usarlo en la tabla
 
       <div class="d-flex justify-content-between">
         <span><strong>Productos únicos:</strong></span>
-        <span><?= $totalProductosUnicos ?></span>
+        <span id="resumenUnicos"><?= $totalProductosUnicos ?></span>
       </div>
 
       <div class="d-flex justify-content-between">
         <span><strong>Productos en total:</strong></span>
-        <span><?= $totalCantidades ?></span>
+        <span id="resumenTotales"><?= $totalCantidades ?></span>
       </div>
 
       <div class="d-flex justify-content-between">
         <span><strong>Valor total:</strong></span>
-        <span>$<?= number_format($totalMontoProductos, 0, ',', '.') ?></span>
+        <span id="resumenValor">$<?= number_format($totalMontoProductos, 0, ',', '.') ?></span>
       </div>
     </div>
   </div>
 </div>
+
 
 <style>
 @media (max-width: 578px) {
@@ -680,6 +681,19 @@ $(document).ready(function() {
 
 
 
+<script>
+document.getElementById('filtroCategoria').addEventListener('change', function() {
+    const categoria = this.value;
+
+    fetch(`resumen_inventario.php?categoria=${encodeURIComponent(categoria)}`)
+        .then(res => res.json())
+        .then(data => {
+            document.getElementById('resumenUnicos').textContent = data.unicos;
+            document.getElementById('resumenTotales').textContent = data.cantidad;
+            document.getElementById('resumenValor').textContent = data.valor;
+        });
+});
+</script>
 
 
 
