@@ -1,12 +1,12 @@
 Array
 (
-    [idproducto] => 7
+    [idproducto] => 1
     [return_url] => /empresayijo/index.php
-    [nombre] => Guante cuero supervisor lavable, clarino executive negro
-    [precio] => 9190.00
+    [nombre] => Electrodo punto azul 1/8
+    [precio] => 6290.00
     [estado] => Excelente
-    [categoria_id] => 6
-    [descripcion] => 
-    [cantidad] => 3
-    [nro_asignacion] => 
+    [categoria_id] => 2
+    [descripcion] => Ninguna
+    [cantidad] => 16
+    [nro_asignacion] => 1341231
 )
